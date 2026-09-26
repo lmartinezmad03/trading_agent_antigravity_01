@@ -1,0 +1,12 @@
+# Environments & Logs
+.venv/
+*.log
+*.sqlite
+
+# Secrets & Credentials
+*.env
+config.json
+secrets.json
+
+# Data
+user_data/data/
