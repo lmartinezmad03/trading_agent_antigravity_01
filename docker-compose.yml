@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  freqtrade:
+    image: freqtradeorg/freqtrade:stable
+    container_name: ft_antigravity_agent
+    restart: unless-stopped
+    # Resource Bounding (Premises 1 & 7: Protect Node B host services)
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./user_data:/freqtrade/user_data
+    command: >
+      trade
+      --config /freqtrade/user_data/config.json
+      --strategy SampleStrategy
+    # Socks5 proxy hook for Tor routing on Node B
+    environment:
+      - HTTP_PROXY=socks5://172.17.0.1:9050
+      - HTTPS_PROXY=socks5://172.17.0.1:9050
